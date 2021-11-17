@@ -19,6 +19,7 @@ import com.google.api.client.util.Key;
 import io.cdap.plugin.github.source.common.model.GitHubModel;
 import io.cdap.plugin.github.source.common.model.impl.user.User;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -48,7 +49,7 @@ public class Commit implements GitHubModel {
   /**
    * Commit.CommitData model
    */
-  public static class CommitData {
+  public static class CommitData implements Serializable {
     @Key
     private String url;
     @Key
@@ -67,7 +68,7 @@ public class Commit implements GitHubModel {
     /**
      * Commit.CommitData.CommitUser model
      */
-    public static class CommitUser {
+    public static class CommitUser implements Serializable {
       @Key
       private String name;
       @Key
@@ -79,7 +80,7 @@ public class Commit implements GitHubModel {
     /**
      * Commit.CommitData.Tree model
      */
-    public static class Tree {
+    public static class Tree implements Serializable {
       @Key
       private String url;
       @Key
@@ -89,7 +90,7 @@ public class Commit implements GitHubModel {
     /**
      * Commit.CommitData.Verification model
      */
-    public static class Verification {
+    public static class Verification implements Serializable {
       @Key
       private Boolean verified;
       @Key

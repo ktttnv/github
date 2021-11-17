@@ -15,8 +15,10 @@
  */
 package io.cdap.plugin.github.source.common.model;
 
+import java.io.Serializable;
+
 /**
  * Generic GitHub model interface for github.
  */
-public interface GitHubModel {
+public interface GitHubModel extends Serializable {
 }

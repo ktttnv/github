@@ -3,14 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>io.cdap.plugin</groupId>
   <artifactId>github-plugin</artifactId>
   <name>GitHub plugin</name>
   <version>1.0.0-SNAPSHOT</version>
   <description>A collection of gitHub connectors and plugins</description>
   <url>https://github.com/data-integrations/github</url>
-
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -19,7 +17,6 @@
       <comments>A business-friendly OSS license</comments>
     </license>
   </licenses>
-
   <developers>
     <developer>
       <name>CDAP</name>
@@ -28,7 +25,6 @@
       <organizationUrl>http://www.cdap.io</organizationUrl>
     </developer>
   </developers>
-
   <repositories>
     <repository>
       <id>sonatype</id>
@@ -43,11 +39,9 @@
       <url>https://repo.eclipse.org/content/groups/releases</url>
     </repository>
   </repositories>
-
   <issueManagement>
     <url>https://issues.cask.co/browse/CDAP</url>
   </issueManagement>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- properties for script build step that creates the config files for the artifacts -->
@@ -64,9 +58,64 @@
     <assertj.version>3.11.1</assertj.version>
     <random-beans.version>3.9.0</random-beans.version>
     <google-http-client-gson.version>1.32.1</google-http-client-gson.version>
+    <beam.version>2.32.0</beam.version>
   </properties>
-
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.beam</groupId>
+        <artifactId>beam-sdks-java-bom</artifactId>
+        <version>${beam.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
+    <!-- Beam -->
+    <dependency>
+      <groupId>org.apache.beam</groupId>
+      <artifactId>beam-sdks-java-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.beam</groupId>
+      <artifactId>beam-sdks-java-io-google-cloud-platform</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.beam</groupId>
+      <artifactId>beam-sdks-java-io-jdbc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.beam</groupId>
+      <artifactId>beam-sdks-java-extensions-google-cloud-platform-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.beam</groupId>
+      <artifactId>beam-runners-google-cloud-dataflow-java</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.beam</groupId>
+      <artifactId>beam-sdks-java-io-hadoop-file-system</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.beam</groupId>
+      <artifactId>beam-sdks-java-io-hadoop-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.beam</groupId>
+      <artifactId>beam-sdks-java-io-hadoop-format</artifactId>
+    </dependency>
+    <dependency>
+      <!-- Direct runner included for local development and testing. -->
+      <groupId>org.apache.beam</groupId>
+      <artifactId>beam-runners-direct-java</artifactId>
+    </dependency>
     <dependency>
       <groupId>io.cdap.cdap</groupId>
       <artifactId>cdap-etl-api</artifactId>
@@ -195,7 +244,6 @@
       <artifactId>google-http-client-gson</artifactId>
       <version>${google-http-client-gson.version}</version>
     </dependency>
-
     <!-- tests -->
     <dependency>
       <groupId>io.cdap.cdap</groupId>
@@ -233,18 +281,18 @@
       <version>${cdap.version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-      <version>2.9.8</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-annotations</artifactId>
-      <version>2.9.0</version>
-      <scope>test</scope>
-    </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>com.fasterxml.jackson.core</groupId>-->
+    <!--      <artifactId>jackson-core</artifactId>-->
+    <!--      <version>2.9.8</version>-->
+    <!--      <scope>test</scope>-->
+    <!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>com.fasterxml.jackson.core</groupId>-->
+    <!--      <artifactId>jackson-annotations</artifactId>-->
+    <!--      <version>2.9.0</version>-->
+    <!--      <scope>test</scope>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>
@@ -252,7 +300,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -363,5 +410,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>

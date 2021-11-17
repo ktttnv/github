@@ -21,6 +21,7 @@ import com.google.api.client.http.HttpResponse;
 import io.cdap.plugin.github.source.common.GitHubRequestFactory;
 import io.cdap.plugin.github.source.common.model.GitHubModel;
 import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
@@ -35,7 +36,7 @@ import static io.cdap.plugin.github.source.common.GitHubRequestFactory.DEFAULT_P
 /**
  * RecordReader implementation, which reads {@link GitHubModel} instances from GitHub repository API for github.
  */
-public class GithubRecordReader extends RecordReader<NullWritable, GitHubModel> {
+public class GithubRecordReader extends RecordReader<Text, GitHubModel> {
 
   private final GithubBatchSourceConfig config;
   private final String link;
@@ -54,7 +55,7 @@ public class GithubRecordReader extends RecordReader<NullWritable, GitHubModel> 
     HttpRequest httpRequest = GitHubRequestFactory.buildRequest(link, config.getAuthorizationToken());
     HttpResponse response = httpRequest.execute();
     Class<? extends GitHubModel[]> datasetClass = (Class<? extends GitHubModel[]>)
-      Array.newInstance(config.getDatasetClass(), 0).getClass();
+            Array.newInstance(config.getDatasetClass(), 0).getClass();
     currentPage = Arrays.stream(response.parseAs(datasetClass)).iterator();
   }
 
@@ -69,8 +70,8 @@ public class GithubRecordReader extends RecordReader<NullWritable, GitHubModel> 
   }
 
   @Override
-  public NullWritable getCurrentKey() {
-    return null;
+  public Text getCurrentKey() {
+    return new Text("");
   }
 
   @Override
